@@ -185,6 +185,7 @@ class ExpenseTrackerScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'expense_fab',
         onPressed: () {
           Navigator.push(
             context,

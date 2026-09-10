@@ -68,6 +68,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: _currentIndex == 0
           ? FloatingActionButton(
+              heroTag: 'main_fab',
               onPressed: () {
                 Navigator.push(
                   context,

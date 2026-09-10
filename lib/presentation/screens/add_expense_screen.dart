@@ -110,6 +110,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     final isEditing = widget.transactionToEdit != null;
     final categories = Provider.of<FinanceProvider>(context).categories;
     final activeBaseCurrency = Provider.of<CurrencyProvider>(context, listen: false).baseCurrency;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (!isEditing && widget.transactionToEdit == null && _selectedCurrency == 'USD') {
       _selectedCurrency = activeBaseCurrency;
@@ -128,10 +129,12 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Segmented Toggle for Expense vs Income
               Container(
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(12),
+                  color: isDark ? const Color(0xFF2C2C2C) : Colors.grey.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
                   children: [
@@ -143,7 +146,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             _selectedCategoryId = null;
                           });
                         },
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             color: _type == 'expense' ? AppColors.expense : Colors.transparent,
@@ -153,8 +157,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           child: Text(
                             'Expense',
                             style: TextStyle(
-                              color: _type == 'expense' ? Colors.white : Colors.black87,
+                              color: _type == 'expense'
+                                  ? Colors.white
+                                  : isDark
+                                      ? Colors.white70
+                                      : Colors.black87,
                               fontWeight: FontWeight.bold,
+                              fontSize: 15,
                             ),
                           ),
                         ),
@@ -168,7 +177,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                             _selectedCategoryId = null;
                           });
                         },
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
                             color: _type == 'income' ? AppColors.income : Colors.transparent,
@@ -178,8 +188,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           child: Text(
                             'Income',
                             style: TextStyle(
-                              color: _type == 'income' ? Colors.white : Colors.black87,
+                              color: _type == 'income'
+                                  ? Colors.white
+                                  : isDark
+                                      ? Colors.white70
+                                      : Colors.black87,
                               fontWeight: FontWeight.bold,
+                              fontSize: 15,
                             ),
                           ),
                         ),
@@ -189,7 +204,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               TextFormField(
                 controller: _titleController,
@@ -250,13 +265,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               const Text(
                 'Category',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               Wrap(
                 spacing: 10,
@@ -269,14 +284,23 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   return InkWell(
                     onTap: () => setState(() => _selectedCategoryId = cat.id),
                     borderRadius: BorderRadius.circular(16),
-                    child: Container(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 150),
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                       decoration: BoxDecoration(
-                        color: isSelected ? catColor : catColor.withOpacity(0.12),
+                        color: isSelected
+                            ? catColor
+                            : isDark
+                                ? catColor.withOpacity(0.22)
+                                : catColor.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: isSelected ? catColor : Colors.transparent,
-                          width: 2,
+                          color: isSelected
+                              ? catColor
+                              : isDark
+                                  ? catColor.withOpacity(0.5)
+                                  : Colors.transparent,
+                          width: isSelected ? 2 : 1,
                         ),
                       ),
                       child: Row(
@@ -285,13 +309,21 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           Icon(
                             catIcon,
                             size: 18,
-                            color: isSelected ? Colors.white : catColor,
+                            color: isSelected
+                                ? Colors.white
+                                : isDark
+                                    ? catColor.withOpacity(0.9)
+                                    : catColor,
                           ),
                           const SizedBox(width: 8),
                           Text(
                             cat.name,
                             style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black87,
+                              color: isSelected
+                                  ? Colors.white
+                                  : isDark
+                                      ? Colors.white
+                                      : Colors.black87,
                               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                               fontSize: 13,
                             ),
@@ -303,7 +335,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 }).toList(),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -360,7 +392,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 32),
 
               ElevatedButton(
                 onPressed: _saveTransaction,

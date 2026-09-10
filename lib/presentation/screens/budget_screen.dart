@@ -217,6 +217,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'budget_fab',
         onPressed: () => _showSetBudgetDialog(context),
         icon: const Icon(Icons.add),
         label: const Text('Set Budget'),
