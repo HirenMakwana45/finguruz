@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -21,8 +22,8 @@ class DBHelper {
   }
 
   Future<Database> _initDB(String filePath) async {
-    // Initialize FFI for desktop environments (Windows, Linux, macOS)
-    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    // Ensure databaseFactory is initialized on desktop platforms
+    if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
