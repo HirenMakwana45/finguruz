@@ -1,8 +1,9 @@
 class AppConstants {
   static const String appName = 'FinGuruz';
 
-  // Currency API (open-source free exchangerate-api endpoint)
-  static const String currencyApiBaseUrl = 'https://open.er-api.com/v6/latest/';
+  // Currency API from exchangerate-api.com (open-source free endpoint)
+  static const String currencyApiBaseUrl = 'https://open.er-api.com/v6/latest/'; // ExchangeRate-API open endpoint
+  static const String fallbackCurrencyApiBaseUrl = 'https://api.exchangerate-api.com/v4/latest/';
 
   // Supported Currencies with symbols
   static const Map<String, String> currencySymbols = {
