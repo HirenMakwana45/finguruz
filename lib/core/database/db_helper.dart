@@ -1,6 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../../data/models/budget_model.dart';
 import '../../data/models/category_model.dart';
@@ -20,6 +21,12 @@ class DBHelper {
   }
 
   Future<Database> _initDB(String filePath) async {
+    // Initialize FFI for desktop environments (Windows, Linux, macOS)
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
+
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
