@@ -155,28 +155,34 @@ class _BudgetScreenState extends State<BudgetScreen> {
               Expanded(
                 child: statuses.isEmpty
                     ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.account_balance_wallet_outlined, size: 64, color: Colors.grey.withOpacity(0.5)),
-                            const SizedBox(height: 12),
-                            const Text(
-                              'No budgets set for this month',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              'Set category budgets to track and limit your monthly expenses.',
-                              style: TextStyle(color: Colors.grey, fontSize: 13),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 20),
-                            ElevatedButton.icon(
-                              onPressed: () => _showSetBudgetDialog(context),
-                              icon: const Icon(Icons.add),
-                              label: const Text('Set New Budget'),
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.account_balance_wallet_outlined, size: 64, color: Colors.grey.withOpacity(0.5)),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'No budgets set for this month',
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 6),
+                              const Text(
+                                'Set category budgets to track and limit your monthly expenses.',
+                                style: TextStyle(color: Colors.grey, fontSize: 13),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 24),
+                              SizedBox(
+                                width: 220,
+                                child: ElevatedButton.icon(
+                                  onPressed: () => _showSetBudgetDialog(context),
+                                  icon: const Icon(Icons.add),
+                                  label: const Text('Set New Budget'),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     : ListView.builder(
@@ -214,6 +220,9 @@ class _BudgetScreenState extends State<BudgetScreen> {
         onPressed: () => _showSetBudgetDialog(context),
         icon: const Icon(Icons.add),
         label: const Text('Set Budget'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
     );
   }
